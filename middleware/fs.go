@@ -15,10 +15,13 @@ type dir http.Dir
 // assets in a subdirectory named after the fully qualified zone.
 //
 // example.org./Kexample<something>.key
+//
+// CoreDir will default to "$HOME/.coredns" on Unix, but it's location can be overriden with the COREDNSPATH
+// environment variable.
 var CoreDir dir = dir(fsPath())
 
-// fsPath returns the path to the folder where the application may store data.
-// If COREDNSPATH env variable is set, that value is used. Otherwise, the path is
+// fsPath returns the path to the directory where the application may store data.
+// If COREDNSPATH env variable. is set, that value is used. Otherwise, the path is
 // the result of evaluating "$HOME/.coredns".
 func fsPath() string {
 	if corePath := os.Getenv("COREDNSPATH"); corePath != "" {
@@ -27,8 +30,7 @@ func fsPath() string {
 	return filepath.Join(userHomeDir(), ".coredns")
 }
 
-// userHomeDir returns the user's home directory according to environment
-// variables.
+// userHomeDir returns the user's home directory according to environment variables.
 //
 // Credit: http://stackoverflow.com/a/7922977/1048862
 func userHomeDir() string {
