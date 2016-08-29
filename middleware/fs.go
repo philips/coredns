@@ -10,6 +10,11 @@ import (
 // dir wraps http.Dir that restrict file access to a specific directory tree.
 type dir http.Dir
 
+// CoreDir is the directory where middleware can store assets, like zone files after a zone transfer
+// or public and private keys or anything else a middleware might need. The convention is to place
+// assets in a subdirectory named after the fully qualified zone.
+//
+// example.org./Kexample<something>.key
 var CoreDir dir = dir(fsPath())
 
 // fsPath returns the path to the folder where the application may store data.
